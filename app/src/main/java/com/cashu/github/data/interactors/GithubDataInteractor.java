@@ -1,7 +1,7 @@
 package com.cashu.github.data.interactors;
 
-import com.cashu.github.data.Exception.NoMoreDataException;
-import com.cashu.github.data.Exception.OfflineNetworkException;
+import com.cashu.github.data.exception.NoMoreDataException;
+import com.cashu.github.data.exception.OfflineNetworkException;
 import com.cashu.github.data.interactors.contract.GithubInteractor;
 import com.cashu.github.data.model.BaseRepositoryModel;
 import com.cashu.github.data.model.GithubEntity;
