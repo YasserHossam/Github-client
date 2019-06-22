@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.cashu.github"
+        minSdkVersion 22
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$project.kotlin_version"
+
+    implementation "androidx.appcompat:appcompat:$project.support_version"
+    implementation "com.google.android.material:material:$project.material_version"
+    implementation "androidx.constraintlayout:constraintlayout:$project.constraint_layout_version"
+    //Retrofit and networking
+    implementation "com.squareup.retrofit2:retrofit:$project.retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$project.retrofit_version"
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$project.retrofit_rxjava_adapter_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$project.logging_interceptor_version"
+
+    //Room
+    implementation "androidx.room:room-runtime:$project.room_version"
+    implementation "androidx.room:room-rxjava2:$project.room_version"
+    annotationProcessor "androidx.room:room-compiler:$project.room_version"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$project.paging_version"
+    implementation "androidx.paging:paging-rxjava2:$project.paging_version"
+
+    //Rx
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxandroid_version"
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxjava_version"
+
+    //Timber
+    implementation "com.jakewharton.timber:timber:$project.timber_version"
+
+    //Butterknife
+    implementation "com.jakewharton:butterknife:$project.butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterknife_version"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$project.glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$project.glide_version"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha01'
+}
