@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/view_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_repo_item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="20dp"
+        android:layout_marginBottom="10dp">
+
+    <ImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="@id/view_main"
+            app:layout_constraintStart_toStartOf="@id/view_main"
+            app:layout_constraintTop_toTopOf="@id/view_main"
+            tools:src="@android:drawable/ic_dialog_alert"/>
+
+    <LinearLayout
+            android:id="@+id/layout_owner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_image">
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/owner_name"/>
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:id="@+id/tv_owner_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="JakeWharton"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_owner_name">
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"/>
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="JakeWharton"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_privacy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_name">
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy"/>
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:id="@+id/tv_privacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="Private"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_privacy"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:text="@string/description"/>
+
+        <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="#FFFFFF"
+                tools:text="Description For the Project that is being displayed"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/layout_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_description">
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stars"/>
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:id="@+id/tv_stars_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="10"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/layout_forks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_description">
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forks"/>
+
+        <TextView
+                android:textColor="#FFFFFF"
+                android:id="@+id/tv_forks_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                tools:text="Private"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
