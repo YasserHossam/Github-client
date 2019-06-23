@@ -1,8 +1,6 @@
 package com.cashu.github.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,9 +26,6 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HomeView {
 
-    @BindView(R.id.progress)
-    ProgressBar mProgress;
-
     @BindView(R.id.recycler_repos)
     RecyclerView mReposRecycler;
 
@@ -39,6 +34,8 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     private static String OWNER_NAME = "JakeWharton";
 
     private static int PAGE_COUNT = 15;
+
+    private Snackbar mSnackBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +74,20 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     }
 
     /**
-     * */
+     * HomeView Implementation
+     */
 
     @Override
     public void showProgressBar() {
-        mProgress.setVisibility(View.VISIBLE);
+        mSnackBar = Snackbar.make(findViewById(R.id.layout_parent), getString(R.string.load_more),
+                Snackbar.LENGTH_INDEFINITE);
+        mSnackBar.show();
     }
 
     @Override
     public void hideProgressBar() {
-        mProgress.setVisibility(View.GONE);
+        if (mSnackBar != null)
+            mSnackBar.dismiss();
     }
 
     @Override
