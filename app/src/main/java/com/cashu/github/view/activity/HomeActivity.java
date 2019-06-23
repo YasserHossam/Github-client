@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         BaseGithubRepository<GithubEntity> remoteGithubRepository = new RemoteGithubRepository(new GithubApi());
         GithubInteractor<GithubEntity> githubInteractor = new GithubDataInteractor<>(localGithubRepository,
                 remoteGithubRepository, PAGE_COUNT);
-        
+
         mPresenter = new GithubReposPresenter(githubInteractor, this);
         mPresenter.loadNextRepos(OWNER_NAME);
     }
