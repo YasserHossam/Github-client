@@ -1,5 +1,5 @@
 # Github-client
-The read me covers the essential information when dealing with the repo
+A simple github client that displays JakeWharton's public repositories, The read me covers the essential information when dealing with the repo
 
 # 1-Requirements
 - Android Studio V 3.0+
