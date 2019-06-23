@@ -12,11 +12,13 @@ import com.cashu.github.R;
 import com.cashu.github.data.api.GithubApi;
 import com.cashu.github.data.database.GithubDatabase;
 import com.cashu.github.data.interactors.GithubDataInteractor;
+import com.cashu.github.data.interactors.contract.GithubInteractor;
 import com.cashu.github.data.model.GithubEntity;
 import com.cashu.github.data.repository.LocalGithubRepository;
 import com.cashu.github.data.repository.RemoteGithubRepository;
+import com.cashu.github.data.repository.contract.BaseGithubRepository;
 import com.cashu.github.presenter.GithubReposPresenter;
-import com.cashu.github.presenter.views.GithubReposView;
+import com.cashu.github.presenter.views.HomeView;
 import com.cashu.github.view.adapter.GithubAdapter;
 import com.cashu.github.view.utils.EndlessRecyclerViewScrollListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,7 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements GithubReposView {
+public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @BindView(R.id.progress)
     ProgressBar mProgress;
@@ -35,6 +37,8 @@ public class HomeActivity extends AppCompatActivity implements GithubReposView {
     private GithubReposPresenter mPresenter;
 
     private static String OWNER_NAME = "JakeWharton";
+
+    private static int PAGE_COUNT = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +65,19 @@ public class HomeActivity extends AppCompatActivity implements GithubReposView {
     }
 
     private void initPresenter() {
-        mPresenter = new GithubReposPresenter(
-                new GithubDataInteractor(
-                        new LocalGithubRepository(GithubDatabase.getDatabase(
-                                this.getApplicationContext()
-                        )), new RemoteGithubRepository(
-                        new GithubApi()
-                ), 15), this
-        );
+        //TODO: Use dagger to inject presenter and it's dependencies
+        GithubDatabase githubDatabase = GithubDatabase.getDatabase(this.getApplicationContext());
+        BaseGithubRepository<GithubEntity> localGithubRepository = new LocalGithubRepository(githubDatabase);
+        BaseGithubRepository<GithubEntity> remoteGithubRepository = new RemoteGithubRepository(new GithubApi());
+        GithubInteractor<GithubEntity> githubInteractor = new GithubDataInteractor<>(localGithubRepository,
+                remoteGithubRepository, PAGE_COUNT);
+        
+        mPresenter = new GithubReposPresenter(githubInteractor, this);
         mPresenter.loadNextRepos(OWNER_NAME);
     }
+
+    /**
+     * */
 
     @Override
     public void showProgressBar() {

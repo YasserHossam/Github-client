@@ -3,10 +3,10 @@ package com.cashu.github.presenter;
 import androidx.annotation.IntDef;
 import com.cashu.github.data.exception.NoMoreDataException;
 import com.cashu.github.data.exception.OfflineNetworkException;
-import com.cashu.github.data.interactors.GithubDataInteractor;
+import com.cashu.github.data.interactors.contract.GithubInteractor;
 import com.cashu.github.data.model.BaseRepositoryModel;
 import com.cashu.github.data.model.GithubEntity;
-import com.cashu.github.presenter.views.GithubReposView;
+import com.cashu.github.presenter.views.HomeView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -14,54 +14,54 @@ import java.util.List;
 
 public class GithubReposPresenter extends BasePresenter {
 
-    private GithubReposView mGithubReposView;
+    private HomeView mHomeView;
 
-    private GithubDataInteractor mGithubRepository;
+    private GithubInteractor<GithubEntity> mGithubInteractor;
 
     private boolean dataLimitReached = false;
 
-    public GithubReposPresenter(GithubDataInteractor githubRepository,
-                                GithubReposView githubReposView) {
-        mGithubRepository = githubRepository;
-        mGithubReposView = githubReposView;
+    public GithubReposPresenter(GithubInteractor<GithubEntity> githubInteractor,
+                                HomeView homeView) {
+        mGithubInteractor = githubInteractor;
+        mHomeView = homeView;
     }
 
     public void loadNextRepos(String userName) {
         if (dataLimitReached)
             return;
-        mGithubReposView.showProgressBar();
-        mGithubRepository.getNextUserRepos(userName)
+        mHomeView.showProgressBar();
+        mGithubInteractor.getNextUserRepos(userName)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
 
                 .subscribe(new BaseObserver<BaseRepositoryModel<List<GithubEntity>>>() {
                     @Override
                     public void onNext(BaseRepositoryModel<List<GithubEntity>> repositoryModel) {
-                        mGithubReposView.hideProgressBar();
+                        mHomeView.hideProgressBar();
 
                         // if the data was from api then there will be paging
                         // else if it was from database, all of the items are being returned and there is no paging.
                         if (repositoryModel.getDataSource() == BaseRepositoryModel.DataSource.DATABASE)
-                            mGithubReposView.clearReposList();
+                            mHomeView.clearReposList();
 
-                        mGithubReposView.showNewRepos(repositoryModel.getData());
+                        mHomeView.showNewRepos(repositoryModel.getData());
 
                         // Handle known errors
                         if (repositoryModel.isErrored() && repositoryModel.getError() != null) {
                             if (repositoryModel.getError() instanceof OfflineNetworkException)
-                                mGithubReposView.showErrorMessage(ErrorTypes.NETWORK_ERROR);
+                                mHomeView.showErrorMessage(ErrorTypes.NETWORK_ERROR);
                             else if (repositoryModel.getError() instanceof NoMoreDataException) {
-                                mGithubReposView.showErrorMessage(ErrorTypes.NO_MORE_DATA_ERROR);
+                                mHomeView.showErrorMessage(ErrorTypes.NO_MORE_DATA_ERROR);
                                 dataLimitReached = true;
                             } else
-                                mGithubReposView.showErrorMessage(ErrorTypes.UNKNOWN_ERROR);
+                                mHomeView.showErrorMessage(ErrorTypes.UNKNOWN_ERROR);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mGithubReposView.hideProgressBar();
-                        mGithubReposView.showErrorMessage(ErrorTypes.UNKNOWN_ERROR);
+                        mHomeView.hideProgressBar();
+                        mHomeView.showErrorMessage(ErrorTypes.UNKNOWN_ERROR);
                     }
 
                     @Override

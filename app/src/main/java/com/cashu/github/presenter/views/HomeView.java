@@ -5,7 +5,7 @@ import com.cashu.github.presenter.GithubReposPresenter;
 
 import java.util.List;
 
-public interface GithubReposView {
+public interface HomeView {
     void showProgressBar();
 
     void hideProgressBar();

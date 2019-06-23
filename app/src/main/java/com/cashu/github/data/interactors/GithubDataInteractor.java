@@ -4,7 +4,6 @@ import com.cashu.github.data.exception.NoMoreDataException;
 import com.cashu.github.data.exception.OfflineNetworkException;
 import com.cashu.github.data.interactors.contract.GithubInteractor;
 import com.cashu.github.data.model.BaseRepositoryModel;
-import com.cashu.github.data.model.GithubEntity;
 import com.cashu.github.data.repository.contract.BaseGithubRepository;
 import io.reactivex.Observable;
 import retrofit2.HttpException;
@@ -16,18 +15,18 @@ import java.util.List;
  * This class acts as a middle-man between presenters and repositories,
  */
 
-public class GithubDataInteractor implements GithubInteractor<GithubEntity> {
+public class GithubDataInteractor<T> implements GithubInteractor<T> {
 
-    private BaseGithubRepository<GithubEntity> mLocalGithubRepository;
+    private BaseGithubRepository<T> mLocalGithubRepository;
 
-    private BaseGithubRepository<GithubEntity> mRemoteGithubRepository;
+    private BaseGithubRepository<T> mRemoteGithubRepository;
 
     private int mPageCount;
 
     private int mPageNumber;
 
-    public GithubDataInteractor(BaseGithubRepository<GithubEntity> localGithubRepository,
-                                BaseGithubRepository<GithubEntity> remoteGithubRepository,
+    public GithubDataInteractor(BaseGithubRepository<T> localGithubRepository,
+                                BaseGithubRepository<T> remoteGithubRepository,
                                 int pageCount) {
         mLocalGithubRepository = localGithubRepository;
         mRemoteGithubRepository = remoteGithubRepository;
@@ -45,7 +44,7 @@ public class GithubDataInteractor implements GithubInteractor<GithubEntity> {
      * Then map the data and save it in the database, If not succeeded,
      * Then try to get the data from local repository
      **/
-    public Observable<BaseRepositoryModel<List<GithubEntity>>> getNextUserRepos(final String userName) {
+    public Observable<BaseRepositoryModel<List<T>>> getNextUserRepos(final String userName) {
         return mRemoteGithubRepository.getUserRepos(userName, mPageNumber, mPageCount)
                 .map(entities -> new BaseRepositoryModel<>(entities, false,
                         null, BaseRepositoryModel.DataSource.API))
