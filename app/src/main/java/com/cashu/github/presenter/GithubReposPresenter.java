@@ -39,8 +39,8 @@ public class GithubReposPresenter extends BasePresenter {
                     public void onNext(BaseRepositoryModel<List<GithubEntity>> repositoryModel) {
                         mGithubReposView.hideProgressBar();
 
-                        // if the data was from api then there is paging
-                        // else if it was from database, all of the items are returning and there is no paging.
+                        // if the data was from api then there will be paging
+                        // else if it was from database, all of the items are being returned and there is no paging.
                         if (repositoryModel.getDataSource() == BaseRepositoryModel.DataSource.DATABASE)
                             mGithubReposView.clearReposList();
 
